@@ -11,11 +11,11 @@ exports.create = (req, res) => {
 // Retrieve all from the database.
 exports.findAll = (req, res) => {
     const name = req.query.name;
-    var condition = name ? { Name: { [Op.iLike]: `%${name}%` } } : null;
+    //var condition = name ? { Name: { [Op.iLike]: `%${name}%` } } : null;
 
     const q = "SELECT * FROM newpr WHERE \"Name\" LIKE '%" + name.toUpperCase() + "%'";
     console.log(q)
-    
+
     db.sequelize.query(q, {
       model: Terra,
       mapToModel: true // pass true here if you have any mapped fields

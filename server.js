@@ -4,9 +4,9 @@ const cors = require("cors");
 
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
+// var corsOptions = {
+//   origin: "http://localhost:8081"
+// };
 
 app.use(cors());//(corsOptions));
 
@@ -21,7 +21,7 @@ db.sequelize.sync();
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to TerraIncognita." });
 });
 
 require("./app/routes/terra.routes")(app);
