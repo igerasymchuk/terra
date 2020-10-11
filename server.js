@@ -31,14 +31,14 @@ app.get('/api/lands', async (req, res) => {
 
         client.query("SELECT * FROM newpr WHERE \"Name\" LIKE '%" + name + "%'", function (err, result) {
             if (err) {
-                return console.error('error running query', err);
+                res.status(400).send(err.message);
+            } else {
+                res.send(result.rows);
             }
-            console.log(result.rows)
-            res.send(result.rows);
         });
 
     } catch (err) {
-        res.status(200).send(resp.rows);
+        res.status(400).send(err);
     }
 })
 
