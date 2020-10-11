@@ -21,24 +21,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // routes
-app.get("/", (req, resp) => {
+app.get("/", (req, res) => {
     res.json({ message: "Welcome to Terra Incognita." });
 });
 
 app.get('/api/lands', async (req, res) => {
     try {
-        var name = req.query.name.toUpperCase();
+        const name = req.query.name;
+        if (!name) {
+            return res.status(400).json({ message: "Insufficient parameters" });
+        }
 
-        client.query("SELECT * FROM newpr WHERE \"Name\" LIKE '%" + name + "%'", function (err, result) {
+        client.query(`SELECT * FROM newpr WHERE "Name" LIKE '%${name.toUpperCase()}%'`, function (err, result) {
             if (err) {
-                res.status(400).send(err.message);
-            } else {
-                res.send(result.rows);
+                return res.status(400).json({ message: err.message });
             }
+            res.send(result.rows);
         });
 
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).json({ message: err.message });
     }
 })
 
